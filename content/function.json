@@ -1,0 +1,23 @@
+{
+  "disabled": false,
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req"
+    },
+    {
+      "name" : "blobContent",
+      "type": "blob",
+      "direction": "in",
+      "path": "jjkedcontentblob/{id}.{extn}",
+       "connection": "AzureWebJobsStorage"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    }
+  ]
+}

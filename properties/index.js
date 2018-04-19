@@ -1,10 +1,17 @@
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    if (req.query.id || (req.body && req.body.id)) {
+    if(Object.keys(req.query).length  != 0 )
+    {
         context.res = {
             // status: 200, /* Defaults to 200 */
-            body: "Hello " + (req.query.id || req.body.id)
+            body: "Hello " + req.query
+        };
+    }
+    else if(Object.keys(req.body).length != 0){
+        context.res = {
+            // status: 200, /* Defaults to 200 */
+            body: "Hello " + req.body
         };
     }
     else {
