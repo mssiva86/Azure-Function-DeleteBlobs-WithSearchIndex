@@ -8,14 +8,7 @@
       "name": "req"
     },
     {
-      "name" : "blobContent",
-      "type": "blob",
-      "direction": "in",
-      "path": "jjkedcontentblob/{id}.{extn}",
-       "connection": "AzureWebJobsStorage"
-    },
-    {
-      "name": "$return",
+      "name": "res",
       "type": "http",
       "direction": "out"
     }

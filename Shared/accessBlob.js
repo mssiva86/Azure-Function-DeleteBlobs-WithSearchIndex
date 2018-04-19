@@ -1,15 +1,12 @@
 const azureStorage = require('azure-storage');
 
-process.env['AZURE_STORAGE_ACCOUNT'] = 'jjkedcontentdevusc';
-process.env['AZURE_STORAGE_ACCESS_KEY'] = 'YI7D896XLoHWOSK6NDsUCTtqB5Y3CofFXKDEZ77dnVXbVAgNIs8jPCU6hXBMbvHgyGiJRDhUXvMkfcm/U5audg==';
-
 
 function connecttoBlob(id,context){
     // const containerName = process.env['BlobContainer'];
     
     var containerName = 'jjkedcontentblob';
     context.res = {
-        body : {'data' : context.bindings.blobContent},
+        body : {'data' : "success"},
         headers : {'Content-type': 'text/xml'}
     }
 }
