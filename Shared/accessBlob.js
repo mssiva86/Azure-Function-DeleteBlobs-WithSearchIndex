@@ -1,41 +1,24 @@
 const azureStorage = require('azure-storage');
 
 
-function connecttoBlob(id,context){
+function connecttoBlob(id,extn,context){
     // const containerName = process.env['BlobContainer'];
+    const blobName = id + "." + extn;
+    const containerName = 'jjkedcontentblob';
+    var blobService = azureStorage.create
     
-    var containerName = 'jjkedcontentblob';
-    context.res = {
-        body : {'data' : "success"},
-        headers : {'Content-type': 'text/xml'}
-    }
-}
-
-
-function getUrl(containerName,id){
-
-    var blobService = azureStorage.createBlobService();
-    var startDate = new Date();
-    startDate.setMinutes(startDate.getMinutes()-15);
-
-    var expiryDate = new Date(startDate);
-    expiryDate.setMinutes(startDate.getMinutes() + 30);
-
-    var permissions = azureStorage.BlobUtilities.SharedAccessPermissions.READ;
-
-    var sharedAccessPolicy = {
-        AccessPolicy : {
-            Permissions : permissions,
-            Start : startDate,
-            Expiry : expiryDate,
-
+    blobService.getBlobToLocalFile(containerName,blobName,blobName, function(error,content){
+        if(!error){
+            context.res = {
+                body : {'data' : content.blob},
+                headers : {'Content-type': 'text/xml'}
+            }
         }
-    };
-
-    var sasToken = blobService.generateSharedAccessSignature(containerName,id,sharedAccessPolicy);
+    });
    
-     return blobService.getUrl(containerName,id,sasToken);
 }
+
+
 
 
 module.exports = {

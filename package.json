@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "azure-storage": "^2.8.1"
+    "azure-storage": "^2.8.1",
+    "request": "^2.86.0"
   }
 }

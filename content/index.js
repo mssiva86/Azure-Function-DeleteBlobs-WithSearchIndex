@@ -4,11 +4,17 @@ module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     
     if (req.query.id || (req.body && req.body.id)) {   
-       
-        if(typeof(req.query.id) !='undefined')
-            accessBlob.connecttoBlob(req.query.id,context);
-        else
-            accessBlob.connecttoBlob(req.body.id,context);
+       var extn = "xml";
+        if(typeof(req.query.id) !='undefined'){
+            if(typeof(req.query.extn) !='undefined')
+              extn = req.query.extn;
+            accessBlob.connecttoBlob(req.query.id,extn,context);
+        }
+        else{
+            if(typeof(req.body.extn)!='undefined')
+             extn = req.body.extn;
+            accessBlob.connecttoBlob(req.body.id,extn,context);
+        }
     }
     else {
         context.res = {
