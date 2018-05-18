@@ -19,8 +19,6 @@ function callAzureSearchAPI(callback){
         })
 
     };
-    context.log("In API Call " + options);
-    context.log(process.env['API_ENDPOINT']);
     request(options,callback);
 }
 
