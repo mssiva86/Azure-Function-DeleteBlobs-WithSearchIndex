@@ -1,7 +1,7 @@
 const azureStorage = require('azure-storage');
 const searchRequest = require('./getSearchIndex.js');
 
-const API_ENDPOINT = "https://jjkedcontentsearch.search.windows.net";
+
 
 
 
@@ -12,6 +12,7 @@ function deleteStorageBlob(blobName,context){
     
     blobService.deleteBlobIfExists(process.env['BlobContainer'],blobNamewithExtn,function(error,response,body){
       if(error == null){
+          context.log("Deletion successfully " + response);
         context.response =  {
             status : response.status,
             body   : response.body
@@ -28,16 +29,18 @@ function deleteStorageBlob(blobName,context){
 
 
 module.exports = function (context, myTimer) {
+    context.log("Start the function process");
  
     searchRequest.callAzureSearchAPI(function(error,response,body){
         if(error == null){
 
             var results = JSON.parse(body);
+            context.log("Success " + results)
             for(key in results.value)
             {
                 var chronicleId = results.value[key].chronicleId;
                 deleteStorageBlob(chronicleId,context);
-                context.log(chronicleId);
+                context.log("The processing id " + chronicleId);
              }
 
              
