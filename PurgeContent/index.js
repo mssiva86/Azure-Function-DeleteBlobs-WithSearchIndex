@@ -1,28 +1,34 @@
 const azureStorage = require('azure-storage');
 const searchRequest = require('./getSearchIndex.js');
-const deleteSearch  = require('./deleteSearchIndex.js');
 
 const API_ENDPOINT = "https://jjkedcontentsearch.search.windows.net";
 
 
 
 
-function deleteStorageBlob(blobName,response){
+function deleteStorageBlob(blobName,context){
     var blobService = azureStorage.createBlobService();
     var blobNamewithExtn = blobName + "." + process.env['ContentType'];
-    blobService.deleteBlobIfExists(process.env['BlobContainer'],blobNamewithExtn,deletionerror => {
-        if(deletionerror){
-            response.statusMessage = "Document Deletion failed";
+    
+    blobService.deleteBlobIfExists(process.env['BlobContainer'],blobNamewithExtn,function(error,response,body){
+      if(error == null){
+        context.response =  {
+            status : response.status,
+            body   : response.body
         }
+      }
+      else{
+          throw error;
+      }
     }); 
+
+
 }
 
-function deleteAzureSearchIndexDocument()
+
 
 module.exports = function (context, myTimer) {
-      
-      
-
+ 
     searchRequest.callAzureSearchAPI(function(error,response,body){
         if(error == null){
 
@@ -30,22 +36,15 @@ module.exports = function (context, myTimer) {
             for(key in results.value)
             {
                 var chronicleId = results.value[key].chronicleId;
-                deleteStorageBlob(chronicleId,response);
-                deleteSearch.deleteIndex(chronicleId,function(error,response,body){
-                    if(error !=null)
-                    {
-                        response.statusMessage = "Index deletion failed";
-                    }
-                });
-                console.log(results.value[key].chronicleId);
-                console.log(key);
+                deleteStorageBlob(chronicleId,context);
              }
 
-            
+             
         }
-        context.done(null,response);
+        else{
+            throw error;
+        }
+        context.done();
     });
-
-   
-    
+  
 };
