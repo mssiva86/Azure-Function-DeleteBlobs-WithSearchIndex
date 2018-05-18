@@ -37,6 +37,7 @@ module.exports = function (context, myTimer) {
             {
                 var chronicleId = results.value[key].chronicleId;
                 deleteStorageBlob(chronicleId,context);
+                console.log(chronicleId);
              }
 
              
