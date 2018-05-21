@@ -48,7 +48,7 @@ module.exports = function (context, myTimer) {
         else{
             throw error;
         }
-        context.done();
+       
     });
-  
+    context.done();
 };
