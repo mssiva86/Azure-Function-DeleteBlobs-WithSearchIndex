@@ -12,7 +12,7 @@ function deleteStorageBlob(blobName,context){
     
     blobService.deleteBlobIfExists(process.env['BlobContainer'],blobNamewithExtn,function(error,response,body){
       if(error == null){
-          context.log("Deletion successfully  : " + response);
+          context.log("Deletion successfully  " + response);
         context.response =  {
             status : response.status,
             body   : response.body
