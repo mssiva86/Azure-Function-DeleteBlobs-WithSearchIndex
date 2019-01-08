@@ -33,7 +33,7 @@ module.exports = function (context, myTimer) {
  
     searchRequest.callAzureSearchAPI(function(error,response,body){
         if(error == null){
-
+            body = body.trim();
             var results = JSON.parse(body);
             context.log("Success " + results)
             for(key in results.value)
