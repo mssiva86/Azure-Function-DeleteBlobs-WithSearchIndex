@@ -33,6 +33,7 @@ module.exports = function (context, myTimer) {
  
     searchRequest.callAzureSearchAPI(function(error,response,body){
         if(error == null){
+            if(body){
             body = body.trim();
             var results = JSON.parse(body);
             context.log("Success " + results)
@@ -43,7 +44,7 @@ module.exports = function (context, myTimer) {
                 context.log("The processing id " + chronicleId);
              }
 
-             
+            }    
         }
         else{
             throw error;
