@@ -3,6 +3,7 @@ const request = require('request');
 function callAzureSearchAPI(callback){
     var date = new Date();
     date.setMonth(date.getMonth() - 3);
+    var dateStr = date.toISOString();
     console.log(date);
     var options = {
         url : process.env['API_ENDPOINT'] + "/indexes/deletion/docs/search?api-version=" + process.env['API-VERSION'],
@@ -14,7 +15,7 @@ function callAzureSearchAPI(callback){
         },
         body : JSON.stringify({
            "search" : "*" ,
-           "filter" : "modifiedDate ge " + date.toISOString() + " ",
+           "filter" : "modifiedDate lt " + date.toISOString() + " ",
            "select" : "chronicleId"
         })
 
