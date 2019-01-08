@@ -27,7 +27,12 @@
             "endsPattern": "^.*Job host started.*"
           }
         }
-      ]
+      ],
+      "options": {
+        "env": {
+          "languageWorkers__node__arguments": "--inspect=5858"
+        }
+      }
     }
   ]
 }
